@@ -1,0 +1,5 @@
+D:\code\objectflow-example\objectflow-example\bin\objectflow-example.dll
+D:\code\objectflow-example\objectflow-example\bin\objectflow-example.pdb
+D:\code\objectflow-example\objectflow-example\obj\Debug\ResolveAssemblyReference.cache
+D:\code\objectflow-example\objectflow-example\obj\Debug\objectflow-example.dll
+D:\code\objectflow-example\objectflow-example\obj\Debug\objectflow-example.pdb
