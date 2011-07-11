@@ -22,3 +22,7 @@ D:\code\objectflow-example\objectflow-example\bin\Iesi.Collections.pdb
 D:\code\objectflow-example\objectflow-example\bin\MvcExtensions.xml
 D:\code\objectflow-example\objectflow-example\bin\MvcExtensions.Windsor.xml
 D:\code\objectflow-example\objectflow-example\bin\NHibernate.ByteCode.Castle.xml
+D:\code\objectflow-example\objectflow-example\bin\Castle.Services.Transaction.dll
+D:\code\objectflow-example\objectflow-example\bin\log4net.dll
+D:\code\objectflow-example\objectflow-example\bin\Castle.Services.Transaction.xml
+D:\code\objectflow-example\objectflow-example\bin\log4net.xml
