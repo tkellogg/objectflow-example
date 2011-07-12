@@ -11,6 +11,7 @@ namespace objectflow_example.Mappings
 	{
 		public JobPostingMapping()
 		{
+			Table("JobPostings");
 			Id(x => x.JobPostingId);
 			Map(x => x.Name);
 			References(x => x.Position).Column("PositionId");

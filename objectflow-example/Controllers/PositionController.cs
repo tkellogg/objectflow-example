@@ -8,26 +8,23 @@ using objectflow_example.Models;
 
 namespace objectflow_example.Controllers
 {
-	public class WorkgroupController : Controller
+	public class PositionController : Controller
 	{
 		private ISession db;
-
-		public WorkgroupController(ISession session)
+		
+		public PositionController(ISession db)
 		{
-			this.db = session;
+			this.db = db;
 		}
-
-		//
-		// GET: /Workgroub/
 
 		public ActionResult Index()
 		{
-			var result = db.QueryOver<Workgroup>().OrderBy(x => x.Name).Asc.List();
+			var result = db.QueryOver<Position>().OrderBy(x => x.Title);
 			return View(result);
 		}
 
 		//
-		// GET: /Workgroub/Details/5
+		// GET: /Position/Details/5
 
 		public ActionResult Details(int id)
 		{
@@ -35,7 +32,7 @@ namespace objectflow_example.Controllers
 		}
 
 		//
-		// GET: /Workgroub/Create
+		// GET: /Position/Create
 
 		public ActionResult Create()
 		{
@@ -43,14 +40,15 @@ namespace objectflow_example.Controllers
 		} 
 
 		//
-		// POST: /Workgroub/Create
+		// POST: /Position/Create
 
 		[HttpPost]
-		public ActionResult Create(Workgroup obj)
+		public ActionResult Create(FormCollection collection)
 		{
 			try
 			{
-				SaveValue(obj);
+				// TODO: Add insert logic here
+
 				return RedirectToAction("Index");
 			}
 			catch
@@ -58,19 +56,9 @@ namespace objectflow_example.Controllers
 				return View();
 			}
 		}
-
-		private void SaveValue(Workgroup obj)
-		{
-			using (var tran = db.BeginTransaction())
-			{
-				db.SaveOrUpdate(obj);
-				db.Flush();
-				tran.Commit();
-			}
-		}
 		
 		//
-		// GET: /Workgroub/Edit/5
+		// GET: /Position/Edit/5
  
 		public ActionResult Edit(int id)
 		{
@@ -78,14 +66,15 @@ namespace objectflow_example.Controllers
 		}
 
 		//
-		// POST: /Workgroub/Edit/5
+		// POST: /Position/Edit/5
 
 		[HttpPost]
-		public ActionResult Edit(int id, Workgroup obj)
+		public ActionResult Edit(int id, FormCollection collection)
 		{
 			try
 			{
-				SaveValue(obj);
+				// TODO: Add update logic here
+ 
 				return RedirectToAction("Index");
 			}
 			catch
@@ -95,7 +84,7 @@ namespace objectflow_example.Controllers
 		}
 
 		//
-		// GET: /Workgroub/Delete/5
+		// GET: /Position/Delete/5
  
 		public ActionResult Delete(int id)
 		{
@@ -103,7 +92,7 @@ namespace objectflow_example.Controllers
 		}
 
 		//
-		// POST: /Workgroub/Delete/5
+		// POST: /Position/Delete/5
 
 		[HttpPost]
 		public ActionResult Delete(int id, FormCollection collection)

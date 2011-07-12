@@ -4,6 +4,15 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create New Workgroup</h2>
 
-@Html.EditorFor(x => x.WorkgroupName)
+@using (Html.BeginForm())
+{ 
+
+	<p>
+		<span>Named: </span>
+		@Html.EditorFor(x => x.Name)
+	</p>
+	
+	<input type="submit" />
+}

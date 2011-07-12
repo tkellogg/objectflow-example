@@ -1,0 +1,14 @@
+﻿@model List<objectflow_example.Models.Position>
+
+@{
+	ViewBag.Title = "Index";
+	var grid = new WebGrid(Model);
+}
+
+<h2>Index</h2>
+
+@grid.GetHtml(columns: new[]{
+	grid.Column("Title"),
+	grid.Column("Description"),
+	grid.Column("Workgroup", format: x => x.Workgroup.Name),
+})

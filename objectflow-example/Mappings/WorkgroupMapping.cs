@@ -11,8 +11,9 @@ namespace objectflow_example.Mappings
 	{
 		public WorkgroupMapping()
 		{
+			Table("Workgroups");
 			Id(x => x.WorkgroupId);
-			Map(x => x.WorkgroupName);
+			Map(x => x.Name);
 		}
 	}
 }

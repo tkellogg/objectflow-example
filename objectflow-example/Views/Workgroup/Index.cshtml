@@ -1,7 +1,7 @@
 ﻿@model List<objectflow_example.Models.Workgroup>
 
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 	var grid = new WebGrid(Model);
 }
 
@@ -10,10 +10,10 @@
 @grid.GetHtml(
 columns: grid.Columns(
 			grid.Column("Name"),
-			grid.Column(format: dyn => Html.ActionLink("Edit", "Edit")),
-			grid.Column(format: dyn => Html.ActionLink("Delete", "Delete"))
+			grid.Column(format: dyn => Html.ActionLink("Edit", "Edit", new { id = dyn.WorkgroupId })),
+			grid.Column(format: dyn => Html.ActionLink("Delete", "Delete", new { id = dyn.WorkgroupId }))
 		)
 	)
 
-@Html.ActionLink("Create", "Action")
+@Html.ActionLink("Create", "Create")
 

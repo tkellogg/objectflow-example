@@ -1,0 +1,3 @@
+[submodule "objectflow"]
+	path = objectflow
+	url = https://tkellogg@github.com/tkellogg/objectflow.git

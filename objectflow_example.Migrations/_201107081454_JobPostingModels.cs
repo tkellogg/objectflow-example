@@ -13,7 +13,7 @@ namespace objectflow_example.Migrations
 		{
 			Create.Table("Workgroups")
 				.WithColumn("WorkgroupId").AsInt32().Identity().PrimaryKey()
-				.WithColumn("WorkgroupName").AsString(255);
+				.WithColumn("Name").AsString(255);
 
 			Create.Table("Positions")
 				.WithColumn("PositionId").AsInt32().Identity().PrimaryKey()

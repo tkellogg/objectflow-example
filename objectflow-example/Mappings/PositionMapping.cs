@@ -11,6 +11,7 @@ namespace objectflow_example.Mappings
 	{
 		public PositionMapping()
 		{
+			Table("Positions");
 			Id(x => x.PositionId);
 			Map(x => x.Title);
 			Map(x => x.Description);
