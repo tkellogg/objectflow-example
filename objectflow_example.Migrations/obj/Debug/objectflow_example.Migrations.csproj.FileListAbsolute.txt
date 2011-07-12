@@ -1,8 +1,0 @@
-D:\code\objectflow-example\objectflow_example.Migrations\bin\Debug\objectflow_example.Migrations.dll
-D:\code\objectflow-example\objectflow_example.Migrations\bin\Debug\objectflow_example.Migrations.pdb
-D:\code\objectflow-example\objectflow_example.Migrations\bin\Debug\FluentMigrator.dll
-D:\code\objectflow-example\objectflow_example.Migrations\bin\Debug\FluentMigrator.pdb
-D:\code\objectflow-example\objectflow_example.Migrations\bin\Debug\FluentMigrator.xml
-D:\code\objectflow-example\objectflow_example.Migrations\obj\Debug\ResolveAssemblyReference.cache
-D:\code\objectflow-example\objectflow_example.Migrations\obj\Debug\objectflow_example.Migrations.dll
-D:\code\objectflow-example\objectflow_example.Migrations\obj\Debug\objectflow_example.Migrations.pdb
