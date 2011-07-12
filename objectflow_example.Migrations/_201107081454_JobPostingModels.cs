@@ -37,9 +37,9 @@ namespace objectflow_example.Migrations
 
 		public override void Down()
 		{
-			Delete.Table("Workgroups");
-			Delete.Table("Positions");
 			Delete.Table("JobPostings");
+			Delete.Table("Positions");
+			Delete.Table("Workgroups");
 		}
 	}
 }
