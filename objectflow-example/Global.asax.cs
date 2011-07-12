@@ -27,9 +27,15 @@ namespace objectflow_example
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			routes.MapRoute(
+				"WithActionId", // Route name
+				"{controller}/{id}/{action}/{actionId}", // URL with parameters
+				new { controller = "Home", action = "Index", id = UrlParameter.Optional, actionId = UrlParameter.Optional }
+			);
+
+			routes.MapRoute(
 				"Default", // Route name
-				"{controller}/{action}/{id}", // URL with parameters
-				new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+				"{controller}/{action}", // URL with parameters
+				new { controller = "Home", action = "Index" } // Parameter defaults
 			);
 
 		}

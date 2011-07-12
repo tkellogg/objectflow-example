@@ -7,15 +7,16 @@ using NHibernate;
 using objectflow_example.Models;
 using Rainbow.ObjectFlow.Stateful;
 using objectflow_example.ViewModels;
+using objectflow_example.Workflow;
 
 namespace objectflow_example.Controllers
 {
 	public class JobPostingController : Controller
 	{
 		private ISession db;
-		private IWorkflowMediator<JobPosting> workflow;
+		private IJobPostingWorkflow workflow;
 
-		public JobPostingController(ISession db, IWorkflowMediator<JobPosting> workflow)
+		public JobPostingController(ISession db, IJobPostingWorkflow workflow)
 		{
 			this.db = db;
 			this.workflow = workflow;
@@ -36,27 +37,38 @@ namespace objectflow_example.Controllers
 		[HttpPost]
 		public ActionResult Create(JobPosting posting)
 		{
-			using (var tran = db.BeginTransaction())
-			{
-				db.Save(posting);
-				db.Flush();
-				tran.Commit();
-			}
-			return CreationWorkflow(posting.JobPostingId, null);
+			db.Save(posting);
+			db.Flush();
+			var result = MapToViewModel(posting);
+			return RedirectToAction("CreationWorkflow", new { id = posting.JobPostingId });
 		}
 
-		[HttpPost]
-		public ActionResult CreationWorkflow(int id, FormCollection collection)
+		[HttpGet]
+		public ActionResult CreationWorkflow(int id)
 		{
 			var posting = db.Get<JobPosting>(id);
-			workflow.Start(posting);
+			var result = MapToViewModel(posting);
+			return View(result);
+		}
 
-			var result = new JobPostingWorkflowViewModel() 
-			{ 
+		private JobPostingWorkflowViewModel MapToViewModel(JobPosting posting)
+		{
+			return new JobPostingWorkflowViewModel()
+			{
 				JobPosting = posting,
+				PostingName = posting != null ? posting.Name : null,
 				NextSteps = workflow.GetPossibleTransitions(posting)
 						.Select(x => (JobPosting.CreationSteps)x.To).ToList()
 			};
+		}
+
+		[HttpPost]
+		public ActionResult CreationWorkflow(int id, string actionId, FormCollection collection)
+		{
+			var action = (JobPosting.CreationSteps)Enum.Parse(typeof(JobPosting.CreationSteps), actionId);
+			var posting = db.Get<JobPosting>(id);
+			workflow.TransitionTo(posting, action);
+			var result = MapToViewModel(posting);
 			return View(result);
 		}
 	}

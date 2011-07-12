@@ -8,7 +8,12 @@ using NHibernate;
 
 namespace objectflow_example.Workflow
 {
-	public class JobPostingWorkflow : WorkflowMediator<JobPosting>
+	public interface IJobPostingWorkflow : IWorkflowMediator<JobPosting>
+	{
+		void TransitionTo(JobPosting posting, JobPosting.CreationSteps step);
+	}
+
+	public class JobPostingWorkflow : WorkflowMediator<JobPosting>, IJobPostingWorkflow
 	{
 		private ISession db;
 
@@ -35,6 +40,14 @@ namespace objectflow_example.Workflow
 				db.SaveOrUpdate(subject);
 				db.Flush();
 				tran.Commit();
+			}
+		}
+
+		public void TransitionTo(JobPosting posting, JobPosting.CreationSteps step)
+		{
+			if (step != posting.CreationStep)
+			{
+				Start(posting);
 			}
 		}
 	}

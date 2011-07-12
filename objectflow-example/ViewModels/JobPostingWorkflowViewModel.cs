@@ -8,6 +8,7 @@ namespace objectflow_example.ViewModels
 {
 	public class JobPostingWorkflowViewModel
 	{
+		public string PostingName { get; set; }
 		public JobPosting JobPosting { get; set; }
 		public IList<JobPosting.CreationSteps> NextSteps { get; set; }
 	}
