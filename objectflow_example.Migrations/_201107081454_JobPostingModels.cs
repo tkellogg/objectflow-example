@@ -13,13 +13,13 @@ namespace objectflow_example.Migrations
 		{
 			Create.Table("Workgroups")
 				.WithColumn("WorkgroupId").AsInt32().Identity().PrimaryKey()
-				.WithColumn("Name").AsString(255);
+				.WithColumn("Name").AsString(255).NotNullable();
 
 			Create.Table("Positions")
 				.WithColumn("PositionId").AsInt32().Identity().PrimaryKey()
-				.WithColumn("Title").AsString(255)
+				.WithColumn("Title").AsString(255).NotNullable()
 				.WithColumn("Description").AsString()
-				.WithColumn("WorkgroupId").AsInt32();
+				.WithColumn("WorkgroupId").AsInt32().NotNullable();
 
 			Create.ForeignKey()
 				.FromTable("Positions").ForeignColumn("WorkgroupId")
@@ -27,8 +27,9 @@ namespace objectflow_example.Migrations
 
 			Create.Table("JobPostings")
 				.WithColumn("JobPostingId").AsInt32().Identity().PrimaryKey()
-				.WithColumn("Name").AsString(255)
-				.WithColumn("PositionId").AsInt32();
+				.WithColumn("Name").AsString(255).Nullable()
+				.WithColumn("PositionId").AsInt32().Nullable()
+				.WithColumn("CreationStep").AsInt32().Nullable();
 
 			Create.ForeignKey()
 				.FromTable("JobPostings").ForeignColumn("PositionId")

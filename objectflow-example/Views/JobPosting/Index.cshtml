@@ -1,0 +1,26 @@
+﻿@model List<objectflow_example.Models.JobPosting>
+
+@{
+	ViewBag.Title = "Index";
+	var grid = new WebGrid(Model);
+}
+
+<h2>Index</h2>
+
+@if (Model.Any())
+{
+	@grid.GetHtml(columns: new[]{ 
+		grid.Column("Name"),
+		grid.Column("Position", format: x => (x.Position != null) ? x.Position.Title : null),
+		grid.Column("CreationStep"),
+	})
+}
+else
+{ 
+	<p>There are no job postings. Please create one.</p>
+}
+
+<p>
+	@Html.ActionLink("Create", "Create")
+</p>
+

@@ -5,109 +5,59 @@ using System.Web;
 using System.Web.Mvc;
 using NHibernate;
 using objectflow_example.Models;
+using Rainbow.ObjectFlow.Stateful;
+using objectflow_example.ViewModels;
 
 namespace objectflow_example.Controllers
 {
 	public class JobPostingController : Controller
 	{
 		private ISession db;
+		private IWorkflowMediator<JobPosting> workflow;
 
-		public JobPostingController(ISession db)
+		public JobPostingController(ISession db, IWorkflowMediator<JobPosting> workflow)
 		{
 			this.db = db;
+			this.workflow = workflow;
 		}
 
-		public ActionResult Index(int parentId)
+		public ActionResult Index()
 		{
-			var group = db.QueryOver<JobPosting>().Where(x => x.Position.PositionId == parentId);
-
-			return View();
+			var result = db.QueryOver<JobPosting>().OrderBy(x => x.Name).Asc.List();
+			return View(result);
 		}
 
-		//
-		// GET: /JobPosting/Details/5
-
-		public ActionResult Details(int id)
-		{
-			return View();
-		}
-
-		//
-		// GET: /JobPosting/Create
-
+		[HttpGet]
 		public ActionResult Create()
 		{
 			return View();
-		} 
-
-		//
-		// POST: /JobPosting/Create
+		}
 
 		[HttpPost]
-		public ActionResult Create(FormCollection collection)
+		public ActionResult Create(JobPosting posting)
 		{
-			try
+			using (var tran = db.BeginTransaction())
 			{
-				// TODO: Add insert logic here
-
-				return RedirectToAction("Index");
+				db.Save(posting);
+				db.Flush();
+				tran.Commit();
 			}
-			catch
-			{
-				return View();
-			}
+			return CreationWorkflow(posting.JobPostingId, null);
 		}
-		
-		//
-		// GET: /JobPosting/Edit/5
- 
-		public ActionResult Edit(int id)
-		{
-			return View();
-		}
-
-		//
-		// POST: /JobPosting/Edit/5
 
 		[HttpPost]
-		public ActionResult Edit(int id, FormCollection collection)
+		public ActionResult CreationWorkflow(int id, FormCollection collection)
 		{
-			try
-			{
-				// TODO: Add update logic here
- 
-				return RedirectToAction("Index");
-			}
-			catch
-			{
-				return View();
-			}
-		}
+			var posting = db.Get<JobPosting>(id);
+			workflow.Start(posting);
 
-		//
-		// GET: /JobPosting/Delete/5
- 
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
-		//
-		// POST: /JobPosting/Delete/5
-
-		[HttpPost]
-		public ActionResult Delete(int id, FormCollection collection)
-		{
-			try
-			{
-				// TODO: Add delete logic here
- 
-				return RedirectToAction("Index");
-			}
-			catch
-			{
-				return View();
-			}
+			var result = new JobPostingWorkflowViewModel() 
+			{ 
+				JobPosting = posting,
+				NextSteps = workflow.GetPossibleTransitions(posting)
+						.Select(x => (JobPosting.CreationSteps)x.To).ToList()
+			};
+			return View(result);
 		}
 	}
 }

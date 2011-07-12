@@ -15,6 +15,7 @@ namespace objectflow_example.Mappings
 			Id(x => x.JobPostingId);
 			Map(x => x.Name);
 			References(x => x.Position).Column("PositionId");
+			Map(x => x.CreationStep).CustomType<int>();
 		}
 	}
 }

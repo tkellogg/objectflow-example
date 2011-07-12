@@ -1,0 +1,17 @@
+﻿@model objectflow_example.Models.JobPosting
+
+@{
+    ViewBag.Title = "Create Job Posting";
+}
+
+<h2>Create New Job Posting</h2>
+
+@using (Html.BeginForm())
+{ 
+	<p>
+		<span>Name: </span>
+		@Html.EditorFor(x => x.Name)
+	</p>
+	<input type="submit" />
+}
+

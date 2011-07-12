@@ -1,0 +1,19 @@
+﻿@model objectflow_example.ViewModels.JobPostingWorkflowViewModel
+
+@{
+	ViewBag.Title = "CreationWorkflow";
+}
+
+@if (string.IsNullOrEmpty(Model.JobPosting.Name))
+{
+	<h2>Creating New Job Posting</h2>
+}
+else 
+{ 
+	<h2>Job Posting For @Model.JobPosting.Name</h2>
+}
+
+@using (Html.BeginForm())
+{ 
+	
+}

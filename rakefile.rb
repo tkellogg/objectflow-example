@@ -14,9 +14,12 @@ Albacore.configure do |config|
 
 end
 
+desc "compile the project and setup the database"
+task :default => [:build, 'db:migrate']
 
 namespace :db do
   
+  desc "setup the database properly"
   task :migrate => 'migrate:up'
   
   namespace :migrate do
@@ -35,4 +38,25 @@ namespace :db do
     
   end
   
+  desc "reset the database by migrating down and back up"
+  task :reset => ['migrate:down', 'migrate:up']
+  
 end
+
+desc "compile the project"
+task :build => 'build:main'
+
+namespace :build do
+
+  msbuild :objectflow do |msb|
+    msb.solution = "objectflow/ObjectWorkFlow.sln"  
+  end
+  
+  msbuild :main => :objectflow do |msb|
+    msb.solution = "objectflow-example.sln"
+  end
+  
+end
+
+
+
