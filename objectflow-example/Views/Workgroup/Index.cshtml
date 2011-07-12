@@ -1,0 +1,19 @@
+﻿@model List<objectflow_example.Models.Workgroup>
+
+@{
+    ViewBag.Title = "Index";
+	var grid = new WebGrid(Model);
+}
+
+<h2>Index</h2>
+
+@grid.GetHtml(
+columns: grid.Columns(
+			grid.Column("Name"),
+			grid.Column(format: dyn => Html.ActionLink("Edit", "Edit")),
+			grid.Column(format: dyn => Html.ActionLink("Delete", "Delete"))
+		)
+	)
+
+@Html.ActionLink("Create", "Action")
+

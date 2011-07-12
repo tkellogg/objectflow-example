@@ -15,7 +15,7 @@ namespace objectflow_example
 	public class MvcApplication : System.Web.HttpApplication, IContainerAccessor
 	{
 		private static WindsorContainer container;
-		private NHibernate.ISessionFactory sessionFactory;
+		private static NHibernate.ISessionFactory sessionFactory;
 
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
@@ -50,7 +50,10 @@ namespace objectflow_example
 					.DefaultSchema("dbo")
 				)
 				.Mappings(x => x.FluentMappings.AddFromAssemblyOf<MvcApplication>())
+				//.ExposeConfiguration(cfg => cfg.SetProperty("current_session_context_class", "managed_web"))
 				.BuildSessionFactory();
+			//BeginRequest += MvcApplication_BeginRequest;
+			//EndRequest += MvcApplication_EndRequest;
 			BootstrapContainer();
 
 		}
@@ -63,8 +66,8 @@ namespace objectflow_example
 			ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 			container.Register(
 				Component.For<NHibernate.ISession>()
-					.UsingFactoryMethod(() => sessionFactory.GetCurrentSession())
-					.LifeStyle.Transient
+					.UsingFactoryMethod(() => sessionFactory.OpenSession())
+					.LifeStyle.PerWebRequest
 			);
 		}
 
