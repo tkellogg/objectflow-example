@@ -13,11 +13,13 @@ else
 	<h2>Job Posting For @Model.JobPosting.Name</h2>
 }
 
-@using (Html.BeginForm())
+@Html.Partial("_" + Model.JobPosting.CreationStep.ToString(), Model)
+
+@foreach (var step in Model.NextSteps)
 {
-	foreach (var step in Model.NextSteps)
+	using (Html.BeginForm("CreationWorkflow", "JobPosting", new { id=Model.JobPosting.JobPostingId, 
+		actionId=step.ToString() }))
 	{
-		@Html.ActionLink(step.ToString(), "CreationWorkflow", new { id=Model.JobPosting.JobPostingId, 
-			actionId=step.ToString() })
+		<input type="submit" value="@step.ToString()" />
 	}
 }

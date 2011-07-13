@@ -13,6 +13,7 @@
 		grid.Column("Name"),
 		grid.Column("Position", format: x => (x.Position != null) ? x.Position.Title : null),
 		grid.Column("CreationStep"),
+		grid.Column("", format: x => Html.ActionLink("Resume", "CreationWorkflow", new { id = x.JobPostingId }))
 	})
 }
 else

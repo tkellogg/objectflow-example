@@ -26,9 +26,9 @@ namespace objectflow_example.Workflow
 		{
 			var wf = new StatefulWorkflow<JobPosting>();
 			wf.Yield(JobPosting.CreationSteps.Begin);
-			wf.Yield(JobPosting.CreationSteps.CreateJobPosting);
-			wf.Yield(JobPosting.CreationSteps.CreatePosition);
 			wf.Yield(JobPosting.CreationSteps.CreateWorkgroup);
+			wf.Yield(JobPosting.CreationSteps.CreatePosition);
+			wf.Yield(JobPosting.CreationSteps.CreateJobPosting);
 			wf.Yield(JobPosting.CreationSteps.Posted);
 			return wf;
 		}
