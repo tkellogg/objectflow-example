@@ -20,6 +20,6 @@ else
 	using (Html.BeginForm("CreationWorkflow", "JobPosting", new { id=Model.JobPosting.JobPostingId, 
 		actionId=step.ToString() }))
 	{
-		<input type="submit" value="@step.ToString()" />
+		<input type="submit" value="@step" />
 	}
 }
