@@ -63,6 +63,9 @@
     <Reference Include="MvcExtensions.Windsor">
       <HintPath>..\packages\MvcExtensions.Windsor.2.0.0.0\lib\net40\MvcExtensions.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="netlint">
+      <HintPath>..\packages\NetLint.1.1.0.0\lib\netlint.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.1.0.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>

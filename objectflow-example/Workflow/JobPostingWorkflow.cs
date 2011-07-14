@@ -5,6 +5,8 @@ using System.Web;
 using Rainbow.ObjectFlow.Stateful;
 using objectflow_example.Models;
 using NHibernate;
+using System.Threading;
+using Rainbow.ObjectFlow.Helpers;
 
 namespace objectflow_example.Workflow
 {
@@ -24,15 +26,30 @@ namespace objectflow_example.Workflow
 
 		protected override IStatefulWorkflow<JobPosting> Define()
 		{
+			var createWorkgroup = Declare.Step();
+			var createPosition = Declare.Step();
+
 			var wf = new StatefulWorkflow<JobPosting>();
 			wf.Yield(JobPosting.CreationSteps.Begin);
+			wf.When((post, dict) => (JobPosting.CreationSteps)dict["next"] == JobPosting.CreationSteps.CreatePosition,
+						otherwise: createPosition);
+
+			wf.Define(createWorkgroup);
 			wf.Yield(JobPosting.CreationSteps.CreateWorkgroup);
+
+			wf.Define(createPosition);
 			wf.Yield(JobPosting.CreationSteps.CreatePosition);
+
+
 			wf.Yield(JobPosting.CreationSteps.CreateJobPosting);
 			wf.Yield(JobPosting.CreationSteps.Posted);
 			return wf;
 		}
 
+		/// <summary>
+		/// This is a convenient place to plug in the persistence layer - NHibernate.
+		/// This always gets called as the workflow is exiting if no exception occurs.
+		/// </summary>
 		protected override void OnFinished(JobPosting subject, object from, object to)
 		{
 			using (var tran = db.BeginTransaction())
