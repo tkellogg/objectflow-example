@@ -31,9 +31,8 @@ namespace objectflow_example.Workflow
 
 			var wf = new StatefulWorkflow<JobPosting>();
 			wf.Yield(JobPosting.CreationSteps.Begin);
-			wf.When((post, dict) => (JobPosting.CreationSteps)dict["next"] == JobPosting.CreationSteps.CreatePosition,
-						otherwise: createPosition);
-			wf.Do(DoThatThing);
+			wf.When((post, dict) => (JobPosting.CreationSteps)dict["next"] == JobPosting.CreationSteps.CreatePosition)
+				.Do(wfx => wfx.Do(x => DoThatThing(x)));
 
 			wf.Define(createWorkgroup);
 			wf.Yield(JobPosting.CreationSteps.CreateWorkgroup);
