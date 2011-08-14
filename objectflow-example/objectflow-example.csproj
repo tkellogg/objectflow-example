@@ -211,6 +211,21 @@
   <ItemGroup>
     <Content Include="Views\JobPosting\_Begin.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobPosting\_CreateJobPosting.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobPosting\CreateWorkgroup.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobPosting\_CreateWorkgroup.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobPosting\_CreatePosition.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JobPosting\_Posted.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

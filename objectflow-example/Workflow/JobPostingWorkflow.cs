@@ -33,9 +33,12 @@ namespace objectflow_example.Workflow
 			wf.Yield(JobPosting.CreationSteps.Begin);
 			wf.When((post, dict) => (JobPosting.CreationSteps)dict["next"] == JobPosting.CreationSteps.CreatePosition,
 						otherwise: createPosition);
+			wf.Do(DoThatThing);
 
 			wf.Define(createWorkgroup);
 			wf.Yield(JobPosting.CreationSteps.CreateWorkgroup);
+
+			wf.When(x => false);
 
 			wf.Define(createPosition);
 			wf.Yield(JobPosting.CreationSteps.CreatePosition);
@@ -44,6 +47,12 @@ namespace objectflow_example.Workflow
 			wf.Yield(JobPosting.CreationSteps.CreateJobPosting);
 			wf.Yield(JobPosting.CreationSteps.Posted);
 			return wf;
+		}
+
+		private JobPosting DoThatThing(JobPosting posting)
+		{
+			posting.Name = "";
+			return posting;
 		}
 
 		/// <summary>
@@ -64,7 +73,7 @@ namespace objectflow_example.Workflow
 		{
 			if (step != posting.CreationStep)
 			{
-				Start(posting);
+				Start(posting, new { next = step });
 			}
 		}
 	}
